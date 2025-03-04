@@ -1,0 +1,87 @@
+.right-container{
+  padding: 20px;
+
+  .header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgb(94, 93, 93);
+
+    .add-folder{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      cursor: pointer;
+      background-color: white;
+    }
+
+    .title{
+      font-weight: 600;
+      font-size: 30px;
+      
+      span{
+        font-weight: 400;
+      }
+    }
+  }
+
+  .folder-container{
+    .folder-header{
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid black;
+      padding: 25px 0;
+
+      .folder-header-item{
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        button{
+          background-color: white;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+        }
+      }
+    }
+
+    .cards-container{
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+
+      .card{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 10px;
+        box-shadow: 2px 2px 5px gray;
+        cursor: pointer;
+        width: 43%;
+        gap: 15px;
+        padding: 12px;
+        transition-duration: 0.3s;
+
+        .title-container{
+          display: flex;
+          flex-direction: column;
+        }
+
+        img{
+          width: 35px;
+        }
+      }
+
+      .card:hover{
+        box-shadow: 2px 2px 15px gray;
+        outline: 2px solid white;
+      }
+    }
+  }
+}
