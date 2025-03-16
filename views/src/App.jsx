@@ -1,16 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomeScreen } from "./components/HomeScreen/leftside";
-import { PlaygroundScreen } from "./components/PlayGroundScreen";
+import { HomeScreen } from "./screens/HomeScreen";
+import { PlaygroundScreen } from "./screens/PlayGroundScreen";
+import { PlaygroundProvider } from "./Providers/PlaygroundProvider";
 
 
 function App() {
   return (
-    <BrowserRouter>
+    <PlaygroundProvider>
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeScreen/>}/>
         <Route path="/playground" element={<PlaygroundScreen/>} />
       </Routes>
     </BrowserRouter>
+    </PlaygroundProvider>
   );
 }
 
