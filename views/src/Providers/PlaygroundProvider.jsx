@@ -54,7 +54,21 @@ const initialData = [
 ];
 
 export const PlaygroundProvider = ({ children }) => {
-  const [folders, setFolders] = useState(initialData);
+  const [folders, setFolders] = useState(() => {
+    const localData = localStorage.getItem('data');
+    if(localData)
+      return JSON.parse(localData);
+    return initialData;
+  });
+
+  const deleteFolder = (id) => {
+    const updatedFolderList = folders.filter((folderItem) => {
+      return folderItem.id !== id;
+    })
+
+    localStorage.setItem('data', JSON.stringify(updatedFolderList));
+    setFolders(updatedFolderList)
+  }
 
   const createNewPlayground = (newPlayground) => {
     const newFolders = [...folders];
@@ -76,13 +90,29 @@ export const PlaygroundProvider = ({ children }) => {
     setFolders(newFolders);
   }
 
+  const createNewFolder = (folderName) => {
+    const newFolder = {
+      id: v4(),
+      title: folderName,
+      files: [],
+    };
+
+    const allFolders = [...folders];
+    allFolders.push(newFolder);
+    localStorage.setItem('data', JSON.stringify(allFolders));
+    setFolders(allFolders);
+  }
+
   useEffect(() => {
-    localStorage.setItem("data", JSON.stringify(folders));
+    if(!localStorage.getItem("data"))
+      localStorage.setItem("data", JSON.stringify(folders));
   }, []);
 
   const playgroundFeatures = {
     folders,
     createNewPlayground,
+    createNewFolder,
+    deleteFolder,
   }
 
   return (

@@ -2,9 +2,15 @@ import { useContext } from "react";
 import "./index.scss";
 import { PlaygroundContext } from "../../../Providers/PlaygroundProvider";
 import { Folder } from "./Folder";
+import { modalConstants, ModalContext } from "../../../Providers/ModalProvider";
 
 export const RightComponent = () => {
   const { folders } = useContext(PlaygroundContext);
+  const modalFeatures = useContext(ModalContext);
+
+  const openCreateNewFolderModal = () => {
+    modalFeatures.openModal(modalConstants.CREATE_FOLDER);
+  }
 
   return (
     <div className="right-container">
@@ -12,7 +18,7 @@ export const RightComponent = () => {
         <div className="title">
           <span>My</span> Playground
         </div>
-        <button className="add-folder">
+        <button className="add-folder" onClick={openCreateNewFolderModal}>
           <span className="material-icons">add</span>
           <span>New Folder</span>
         </button>
@@ -24,6 +30,7 @@ export const RightComponent = () => {
             folderTitle={folder?.title}
             cards={folder?.files}
             key={index}
+            id = {folder.id}
           />
         );
       })}

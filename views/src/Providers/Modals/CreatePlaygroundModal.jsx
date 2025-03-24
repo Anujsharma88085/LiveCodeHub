@@ -33,12 +33,12 @@ export const CreatePlaygroundModal = () => {
         <h1>Create New Playground</h1>
         <div className="item">
           <p>Enter Folder Name</p>
-          <input type="text" name="folderName" />
+          <input type="text" name="folderName" required/>
         </div>
 
         <div className="item">
           <p>Enter Card Name</p>
-          <input type="text" name="fileName" />
+          <input type="text" name="fileName" required/>
         </div>
 
         <div className="item">

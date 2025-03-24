@@ -1,6 +1,16 @@
+import { useContext } from "react";
 import { File } from "./File";
+import { PlaygroundContext } from "../../../Providers/PlaygroundProvider";
 
-export const Folder = ({ folderTitle, cards }) => {
+export const Folder = ({ folderTitle, cards, id }) => {
+
+  const playgroundFeatures = useContext(PlaygroundContext);
+  const {folders} = playgroundFeatures;
+
+  const handleDeleteFolder = () => {
+    playgroundFeatures.deleteFolder(id);
+  }
+
   return (
     <div className="folder-container">
       <div className="folder-header">
@@ -12,7 +22,7 @@ export const Folder = ({ folderTitle, cards }) => {
         </div>
 
         <div className="folder-header-item">
-          <span className="material-icons">delete</span>
+          <span className="material-icons" onClick={handleDeleteFolder}>delete</span>
           <span className="material-icons">edit</span>
           <button>
             <span className="material-icons">add</span>
