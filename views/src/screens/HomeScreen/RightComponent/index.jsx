@@ -30,7 +30,7 @@ export const RightComponent = () => {
             folderTitle={folder?.title}
             cards={folder?.files}
             key={index}
-            id = {folder.id}
+            folderId = {folder.id}
           />
         );
       })}

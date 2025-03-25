@@ -1,14 +1,25 @@
 import { useContext } from "react";
 import { File } from "./File";
 import { PlaygroundContext } from "../../../Providers/PlaygroundProvider";
+import { modalConstants, ModalContext } from "../../../Providers/ModalProvider";
 
-export const Folder = ({ folderTitle, cards, id }) => {
+export const Folder = ({ folderTitle, cards, folderId }) => {
 
   const playgroundFeatures = useContext(PlaygroundContext);
-  const {folders} = playgroundFeatures;
+  const {openModal, setModalPayload} = useContext(ModalContext);
 
   const handleDeleteFolder = () => {
-    playgroundFeatures.deleteFolder(id);
+    playgroundFeatures.deleteFolder(folderId);
+  }
+
+  const onEditFolderTitle = () => {
+    setModalPayload(folderId);
+    openModal(modalConstants.UPDATE_FOLDER_TITLE);
+  }
+
+  const openCreateCardModal = () => {
+    setModalPayload(folderId);
+    openModal(modalConstants.CREATE_CARD);
   }
 
   return (
@@ -23,8 +34,8 @@ export const Folder = ({ folderTitle, cards, id }) => {
 
         <div className="folder-header-item">
           <span className="material-icons" onClick={handleDeleteFolder}>delete</span>
-          <span className="material-icons">edit</span>
-          <button>
+          <span className="material-icons" onClick={onEditFolderTitle}>edit</span>
+          <button style={{cursor:'pointer'}} onClick={openCreateCardModal}>
             <span className="material-icons">add</span>
             <span>New Playground</span>
           </button>
@@ -33,7 +44,7 @@ export const Folder = ({ folderTitle, cards, id }) => {
 
       <div className="cards-container">
         {cards?.map((file, index) => {
-          return <File file={file} key={index}></File>;
+          return <File file={file} folderId={folderId} key={index}></File>;
         })}
       </div>
     </div>
