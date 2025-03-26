@@ -1,10 +1,12 @@
 import { modalConstants, ModalContext } from "../../../Providers/ModalProvider";
 import { useContext } from "react";
 import { PlaygroundContext } from "../../../Providers/PlaygroundProvider";
+import { useNavigate } from "react-router-dom";
 
 export const File = ({ file, folderId }) => {
   const {setModalPayload, openModal} = useContext(ModalContext);
-  const {deleteFile} = useContext(PlaygroundContext)
+  const {deleteFile} = useContext(PlaygroundContext);
+  const navigate  = useNavigate();
 
   const onEditFile = () => {
     setModalPayload({fileId: file.id, folderId:folderId});
@@ -15,8 +17,12 @@ export const File = ({ file, folderId }) => {
     deleteFile(folderId, file.id);
   }
 
+  const navigateToPlayground = () => {
+    navigate(`/playground/${file.id}/${folderId}`);
+  }
+
   return (
-    <div className="card">
+    <div className="card" onClick={navigateToPlayground}>
       <div style={{ display: "flex", gap: "10px" }}>
         <img src="logo.webp" alt="" />
         <div className="title-container">
