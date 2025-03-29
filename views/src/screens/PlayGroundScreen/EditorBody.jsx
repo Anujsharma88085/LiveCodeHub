@@ -1,14 +1,14 @@
 import Editor from '@monaco-editor/react'
+import { useRef } from 'react'
 
 const editorOptions = {
   fontSize: '16px',
   wordWrap: 'on',
 }
 
-export const EditorBody = () => {
+export const EditorBody = ({code, setCode, codeRef, language, theme}) => {
   const onChangeCode = (newCode) => {
-    //handle something with the newCode
-    // console.log({newCode})
+    codeRef.current = newCode;
   }
 
   return (
@@ -16,10 +16,11 @@ export const EditorBody = () => {
       <Editor
         width={'100%'}
         height={'100%'}
-        language={'javascript'}
+        language={language}
         options={editorOptions}
-        theme={'vs-dark'}
+        theme={theme}
         onChange={onChangeCode}
+        value={code}
       />
     </div>
   );
