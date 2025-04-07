@@ -1,4 +1,4 @@
-export const EditorFooter = ({code, setCode, codeRef, language}) => {
+export const EditorFooter = ({runCode, setCode, codeRef, language, isFullScreen, setIsFullScreen}) => {
 
   const importCode = (event) => {
     const file = event.target.files[0];
@@ -46,11 +46,19 @@ export const EditorFooter = ({code, setCode, codeRef, language}) => {
     }
   }
 
+  const fullScreen = () => {
+    setIsFullScreen(!isFullScreen);
+  }
+
+  const onRunCode = () => {
+    runCode({code: codeRef.current, language});
+  }
+
   return (
     <div className="editor-footer">
-      <button className='btn'>
+      <button className='btn' onClick={fullScreen}>
         <span className='material-icons'>fullscreen</span>
-        <span>Full Screen</span>
+        <span>{isFullScreen ? "Minimize" : "Full Screen"}</span>
       </button>
       <label htmlFor="import-code" className='btn'>
         <span className='material-icons'>cloud_download</span>
@@ -61,7 +69,7 @@ export const EditorFooter = ({code, setCode, codeRef, language}) => {
         <span className='material-icons'>cloud_upload</span>
         <span>Export Code</span>
       </button>
-      <button className='btn'>
+      <button className='btn' onClick={onRunCode}>
         <span className='material-icons'>play_arrow</span>
         <span>Run Code</span>
       </button>

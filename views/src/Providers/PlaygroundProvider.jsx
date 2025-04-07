@@ -4,16 +4,14 @@ import { v4 } from "uuid";
 export const PlaygroundContext = createContext();
 
 export const defaultCodes = {
-  'cpp': `
-#include <iostream>
+  'cpp': `#include <iostream>
 int main()
 {
   std::cout<<"Hello World";
   return 0;
 }`,
 
-  'java': `
-public class Main
+  'java': `public class Main
 {
   public static void main(String[] args) {
     System.out.println("Hello World");
@@ -206,6 +204,34 @@ export const PlaygroundProvider = ({ children }) => {
     }
   }
 
+  const getTitle = (fileId, folderId) => {
+    for(let i = 0; i < folders.length; i++){
+      if(folderId === folders[i].id){
+        for(let j = 0; j < folders[i].files.length; j++){
+          const currentFile = folders[i].files[j];
+          if(currentFile.id === fileId)
+            return currentFile.title;
+        }
+      }
+    }
+  }
+
+  const saveCode = (fileId, folderId, newCode) => {
+    const newFolders = [...folders];
+    for(let i = 0; i < newFolders.length; i++){
+      if(folderId === newFolders[i].id){
+        for(let j = 0; j < newFolders[i].files.length; j++){
+          const currentFile = newFolders[i].files[j];
+          if(currentFile.id === fileId){
+            newFolders[i].files[j].code = newCode;
+          }
+        }
+      }
+    }
+    localStorage.setItem('data', JSON.stringify(newFolders));
+    setFolders(newFolders);
+  }
+
   useEffect(() => {
     if(!localStorage.getItem("data"))
       localStorage.setItem("data", JSON.stringify(folders));
@@ -223,6 +249,8 @@ export const PlaygroundProvider = ({ children }) => {
     getDefaultCode,
     getLanguage,
     updateLanguage,
+    saveCode,
+    getTitle,
   }
 
   return (

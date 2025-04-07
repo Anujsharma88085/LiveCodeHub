@@ -3,6 +3,7 @@ import { HomeScreen } from "./screens/HomeScreen";
 import { PlaygroundScreen } from "./screens/PlayGroundScreen";
 import { PlaygroundProvider } from "./Providers/PlaygroundProvider";
 import { ModalProvider } from "./Providers/ModalProvider";
+import { Modal } from "./Providers/Modals/Modal";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Route path="/playground/:fileId/:folderId" element={<PlaygroundScreen/>} />
           </Routes>
         </BrowserRouter>
+        <Modal/>
       </ModalProvider>
     </PlaygroundProvider>
   );
