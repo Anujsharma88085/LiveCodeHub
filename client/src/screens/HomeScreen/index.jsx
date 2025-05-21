@@ -3,6 +3,7 @@ import { Modal } from "../../Providers/Modals/Modal"
 import "./index.scss"
 import { RightComponent } from "./RightComponent"
 import { ModalContext } from "../../Providers/ModalProvider"
+import { Header } from "../../../components/Header"
 
 export const HomeScreen = () => {
   const modalFeatures = useContext(ModalContext);
@@ -12,6 +13,7 @@ export const HomeScreen = () => {
   }
 
   return (
+<>
     <div className="home-container">
       <div className="left-container">
           <div className="items-container">
@@ -27,5 +29,6 @@ export const HomeScreen = () => {
       <RightComponent/>
       <Modal/>
     </div>
+    </>
   )
 }
