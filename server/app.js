@@ -1,5 +1,4 @@
 const express = require('express');
-const morgan = require('morgan');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -8,9 +7,12 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const path=require('path')
 const dotenv = require('dotenv');
-const userRouter = require('./routes/userRoutes'); // Make sure this path is correct
-const errorController = require('./controllers/errorController');
+
 const { globalErrorHandler } = require('./controllers/errorController');
+
+const userRouter = require('./routes/userRoutes');
+const folderRouter = require('./routes/folderRoutes');
+const playgroundRouter = require('./routes/playgroundRoutes');
 
 dotenv.config({ path: './config.env' });
 
@@ -52,8 +54,10 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
 
-// Use the user router for related routes
+// Routes
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/folders', folderRouter);
+app.use('/api/v1/playground', playgroundRouter);
 
 // Base route
 app.get('/', (req, res) => {
@@ -69,6 +73,5 @@ app.all('*', (req, res) => {
 });
 
 app.use(globalErrorHandler);
-
 
 module.exports = app;
