@@ -17,7 +17,7 @@ const signToken = id => {
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  console.log('dfdfdfdfdfdfdfdffdffdf')
+  // console.log('dfdfdfdfdfdfdfdffdffdf')
   const cookieOptions = {
     httpOnly: true, 
     secure: false, 
@@ -31,7 +31,7 @@ const createSendToken = (user, statusCode, res) => {
 
   // Remove password from output
   user.password = undefined;
-  console.log(user,token,statusCode);
+  // console.log(user,token,statusCode);
 
   res.status(statusCode).json({
     status: 'success',
@@ -43,7 +43,11 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  console.log(req.body)
+  // console.log(req.body)
+  const existingUser = await User.findOne({ email: req.body.email, active: { $ne: false } });
+if (existingUser) {
+  return res.status(400).json({ message: 'Email already in use.' });
+}
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -53,7 +57,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
 
   const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(url);
+  // console.log(url);
   // await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
@@ -90,7 +94,7 @@ exports.logout = (req, res) => {
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check of it's there
   let token;
-  console.log('ddddddd',req.headers);
+  // console.log('ddddddd',req.headers);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
@@ -106,11 +110,11 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('You are not logged in! Please log in to get access.', 401)
     );
   }
-  console.log(token,'ttttt')
+  // console.log(token,'ttttt')
 
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-  console.log('ttttt')
+  // console.log('ttttt')
 
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
@@ -123,7 +127,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  console.log('ttttt')
+  // console.log('ttttt')
 
   // 4) Check if user changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
@@ -186,10 +190,10 @@ exports.restrictTo = (...roles) => {
 
 exports.forgotPassword = catchAsync(async (req, res) => {
   const { email } = req.body;
-  console.log('user');
+  // console.log('user');
 
   const user = await User.findOne({ email });
-  console.log(user);
+  // console.log(user);
 
   if (!user) {
     return res.status(404).json({ error: "User not found" });
@@ -267,7 +271,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     return next(new AppError('Token is invalid or has expired', 400));
   }
 
-  console.log(req.body);
+  // console.log(req.body);
 
   // 2) Check if both password and passwordConfirm are provided
   if (!req.body.newPassword || !req.body.passwordConfirm) {

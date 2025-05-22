@@ -91,10 +91,17 @@ export const AuthProvider = ({ children }) => {
 
   const [isSignup, setIsSignup] = useState(false);
   const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser && storedUser !== "undefined") {
+        return JSON.parse(storedUser);
+      }
+    } catch (err) {
+      console.error("Error parsing user from localStorage:", err);
+    }
+    return null;
   });
-
+  
   const [form, setForm] = useState({
     name: "",
     username: "",

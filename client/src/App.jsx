@@ -21,22 +21,28 @@ function App() {
   return (
     <PlaygroundProvider>
       <ModalProvider>
-        {!hideHeader && <Header />}
-        <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<HomeScreen />} />
-          <Route
-            path="/playground/:fileId/:folderId"
-            element={<PlaygroundScreen />}
-          />
-        </Routes>
-        <Modal />
+      <div className="h-screen flex flex-col overflow-hidden">
+      {!hideHeader && <Header />}
+      <div className="flex-grow min-h-0 overflow-hidden">
+
+          <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<HomeScreen />} />
+            <Route
+              path="/playground/:fileId/:folderId"
+              element={<PlaygroundScreen />}
+            />
+          </Routes>
+          </div>
+          <Modal />
+        </div>
       </ModalProvider>
     </PlaygroundProvider>
   );
+  
 }
 
 export default App;

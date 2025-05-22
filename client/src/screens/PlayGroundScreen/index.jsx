@@ -74,9 +74,9 @@ export const PlaygroundScreen = () => {
 
   return (
     <div className="playground-container">
-      <div className="header-container">
+      {/* <div className="header-container">
         <img src="/logo.webp" alt="Logo" className="logo" />
-      </div>
+      </div> */}
 
       <div className="content-container">
         <div className="editor-container">
