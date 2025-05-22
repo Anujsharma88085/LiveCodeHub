@@ -22,7 +22,6 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
-
 // Middleware to log incoming requests
 app.use((req, res, next) => {
   console.log(`Incoming Request → ${req.method} ${req.originalUrl}`);
