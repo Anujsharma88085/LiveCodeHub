@@ -14,13 +14,13 @@ export const CreateCardModal = () => {
     const language = e.target.language.value;
 
     const file = {
-      id: v4(),
-      title: fileName,
-      language,
-      code: defaultCodes[language],
-    }
+    id: modalPayload.playgroundID,
+    title: fileName,
+    language,
+    code: defaultCodes[language],
+  }
 
-    createPlayground(modalPayload, file);
+    createPlayground(modalPayload.folderId, file);
     closeModal();
   }
 
@@ -30,7 +30,17 @@ export const CreateCardModal = () => {
 
         <h1>Create New Playground</h1>
         <div className="item">
-          <input type="text" placeholder='Enter Card name here' name="fileName" required/>
+          <p>Playground ID</p>
+          <input
+            type="text"
+            value={modalPayload?.playgroundID || ''}
+            readOnly
+            style={{ backgroundColor: "#f0f0f0", border: "none", padding: "8px" }}
+          />
+        </div>
+
+        <div className="item">
+          <input type="text" placeholder='Enter Playground name here' name="fileName" required/>
         </div>
         <div className="item">
           <select name="language" id="">
